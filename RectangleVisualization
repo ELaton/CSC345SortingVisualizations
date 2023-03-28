@@ -5,7 +5,7 @@
  */
 
 // Global Variable Declaration and Initialization
-int numRectangles = 50;
+int numRectangles = 5;
 int[] rectangleLengths = new int[numRectangles];
 
 // Sets Up the Startup Window
@@ -30,12 +30,8 @@ void drawRectangles(int numRects) {
     for (int i = numRects; i > 0; i--) {
 
       // Randomizes the Rectangle Lengths
-      int heightModifier = (int) random(2, numRects);
+      int heightModifier = (int) random(1, 50);
 
-      // Prevents Rectangles of Lengths 0
-      if (heightModifier == 0) {
-        heightModifier = 1;
-      }
       rect(startingX, yCoordinate, rectWidth, -heightModifier * 10);
       rectangleLengths[currentPosition] = heightModifier * 10;
       currentPosition++;
@@ -49,12 +45,8 @@ void drawRectangles(int numRects) {
     for (int i = 0; i < numRects; i++) {
 
       // Randomizes the Rectangle Lengths
-      int heightModifier = (int) random(numRects);
+      int heightModifier = (int) random(1, numRects);
 
-      // Prevents Rectangles of Length 0
-      if (heightModifier == 0) {
-        heightModifier = 1;
-      }
       rect(100 + rectWidth * i, yCoordinate, rectWidth, -heightModifier * 10);
       rectangleLengths[currentPosition] = heightModifier * 10;
       currentPosition++;
