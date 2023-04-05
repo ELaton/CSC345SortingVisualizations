@@ -17,6 +17,7 @@ class sortingAlgorithms {
           inputArray[secondPosition] = inputArray[secondPosition + 1];
           inputArray[secondPosition + 1] = originalElement;
         }
+        redraw(); 
       }
     }
   }
