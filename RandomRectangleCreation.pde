@@ -6,12 +6,14 @@
  */
 
 class visualRepresentation {
+  
+  // Global Variable Declaration and Initialization
+  int yCoordinate = 700; 
+  int currentPosition = 0; 
+  
   // Draws the Randomized Rectangles According to Input Number of Rectangles
-  void drawRectangles(int numRects) {
+  void drawInitialRectangles(int numRects) {
 
-    // Local Variable Declaration and Initialization
-    int yCoordinate = 700;
-    int currentPosition = 0;
 
     // Adds Up to 28 Rectangles and Recenters Them Accordingly
     if (numRects <= 28) {
@@ -38,6 +40,30 @@ class visualRepresentation {
         rect(100 + rectWidth * i, yCoordinate, rectWidth, -heightModifier * 10);
         rectangleLengths[currentPosition] = heightModifier * 10;
         currentPosition++;
+      }
+    }
+  }
+  
+  // Updates the Rectangles Based on Any Changes to the Array
+  void drawUpdatedRectangles(int[] rectLengths, int currentRect) {
+    background(200, 200, 200); 
+    int numRects = rectLengths.length; 
+    
+    // Redraws the Board for Arrays of Size 28 or Less
+    if (numRects <= 28) {
+      int rectWidth = 50; 
+      int startingX = 750 - (25 * (numRects - 1));
+      for (int i = numRects - 1; i >= 0; i--) {
+        fill(255, 255, 255); 
+        
+        // Highlights the Current Rectangle in Green
+        if (currentRect == i) {
+          fill(0, 255, 0); 
+        }
+        rect(startingX, yCoordinate, rectWidth, -rectLengths[numRects - i - 1]); 
+        currentPosition++; 
+        startingX += 50; 
+        
       }
     }
   }
