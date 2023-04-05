@@ -8,9 +8,10 @@
  */
 
 // Global Variable and Class Declaration and Initialization
-int numRectangles = 50;
+int numRectangles = 28;
 int ticSpeed = 10; 
 int[] rectangleLengths = new int[numRectangles];
+int currentRectangle = numRectangles - 1; 
 visualRepresentation randomizedRectangles = new visualRepresentation();
 sortingAlgorithms sort = new sortingAlgorithms();
 
@@ -18,10 +19,19 @@ sortingAlgorithms sort = new sortingAlgorithms();
 void setup() {
   size(1600, 900);
   background(200, 200, 200);
-  randomizedRectangles.drawRectangles(numRectangles);
+  randomizedRectangles.drawInitialRectangles(numRectangles);
   frameRate(ticSpeed);
-
+  
   // Used for Debugging Purposes
-  sort.arrayToString(rectangleLengths);
-  sort.debugSortingAlgorithms();
+  // sort.debugSortingAlgorithms();
+  // sort.arrayToString(numRectangles); 
+}
+
+void draw() {
+    sort.bubbleSort(rectangleLengths); 
+    randomizedRectangles.drawUpdatedRectangles(rectangleLengths, currentRectangle); 
+    currentRectangle--; 
+    if (currentRectangle < 0) {
+      noLoop(); 
+    }
 }
