@@ -4,6 +4,10 @@ int ticSpeed = 50;
 int[] rectangleLengths = new int[numRectangles];
 boolean recenterNotSkinny = (numRectangles <= 28);
 
+int index = 1; 
+
+
+int currentPosition = 0; 
 void setup() {
   size(1600, 900);
   frameRate(ticSpeed);
@@ -12,7 +16,7 @@ void setup() {
 }
 
 void draw() {
-  bubbleSort();
+  insertionSort(); 
 }
 
 void swapArrayElements(int firstPos, int secondPos) {
@@ -20,6 +24,64 @@ void swapArrayElements(int firstPos, int secondPos) {
   rectangleLengths[secondPos] = rectangleLengths[firstPos];
   rectangleLengths[firstPos] = tempElement;
   drawRectangles();
+}
+
+
+void selectionSort() {
+  // TODO: This as well
+}
+
+boolean isSorted() {
+  for (int index = 0; index < numRectangles - 1; index++) {
+    if (rectangleLengths[index] > rectangleLengths[index + 1]) {
+      return false; 
+    }
+  }
+  return true; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void insertionSort() {
+  currentRectangle = index; 
+  while (currentRectangle > 0 && rectangleLengths[currentRectangle - 1] > rectangleLengths[currentRectangle]) {
+    swapArrayElements(currentRectangle - 1, currentRectangle); 
+    currentRectangle--;
+  }
+  index++; 
+  if (index == numRectangles) {
+    noLoop(); 
+  }
 }
 
 void bubbleSort() {
@@ -30,19 +92,12 @@ void bubbleSort() {
     }
   }
   currentRectangle++;
-  if (currentRectangle == numRectangles) {
+  if (currentRectangle == numRectangles && isSorted() == false) {
     currentRectangle = 0;
   }
-  // TODO: Create Exit Case Here
-}
-
-void insertionSort() {
-  // TODO: Like Bubble Sort but Optimized (Doesn't Search Sorted Array)
-  // Sorted Array is also at the Front instead of the End
-}
-
-void selectionSort() {
-  // TODO: This as well
+  else if (currentRectangle == numRectangles && isSorted() == true) {
+    noLoop(); 
+  }
 }
 
 void generateRectangleLengths() {
