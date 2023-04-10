@@ -201,7 +201,7 @@ public class Sort {
     }
 
     private static void timRecur(ProjectArray a, int lower, int upper) {
-        if (upper - lower < 16) {
+        if (upper - lower < 17) {
             hybridInsertion(a, lower, upper);
             return;
         }
