@@ -210,7 +210,28 @@ public class Sort {
         timRecur(a, mid + 1, upper);
         merge(a, lower, mid, mid + 1, upper);
     }
-    
+
+    private static void merge(ProjectArray a, int lower, int mid1, int mid2, int upper) {
+        int bottom   = lower;
+        int tmpIndex = lower;
+        
+        // loop while lower or upper array still has elements
+        while (lower <= mid1 || mid2 <= upper) {
+            if (lower > mid1) // lower array is fully copied, so copy rest of upper array
+                a.setExtra(tmpIndex++, a.get(mid2++));
+            else if (mid2 > upper) // upper array is fully copied, so copy rest of lower array
+                a.setExtra(tmpIndex++, a.get(lower++));
+            else if (a.get(lower) <= a.get(mid2)) // copy the smaller element among the two arrays
+                a.setExtra(tmpIndex++, a.get(lower++));
+            else
+                a.setExtra(tmpIndex++, a.get(mid2++));
+        }
+
+        // copy values from tmp array back into array
+        for (int i = bottom; i <= upper; i++)
+            a.set(i, a.getExtra(i));
+    }
+
     public static void QuickHybrid(ProjectArray array) {
         QuickHybridRecur(array, 0, array.length() - 1);
     }
@@ -243,7 +264,7 @@ public class Sort {
     private static void hybridInsertion(ProjectArray array, int lower, int upper) {
         for (int i = lower; i < upper; i++) {
             int compares = i;
-            while (compares >= 0 && array.get(compares) > array.get(compares+1)) {
+            while (compares >= lower && array.get(compares) > array.get(compares+1)) {
                 array.swap(compares, compares + 1);
                 compares -= 1;
             }
