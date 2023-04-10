@@ -12,11 +12,8 @@ void setup() {
 }
 
 void draw() {
-  bubbleSort(); 
+  bubbleSort();
 }
-
-
-
 
 void swapArrayElements(int firstPos, int secondPos) {
   int tempElement = rectangleLengths[secondPos];
@@ -25,8 +22,6 @@ void swapArrayElements(int firstPos, int secondPos) {
   drawRectangles();
 }
 
-
-
 void bubbleSort() {
   drawRectangles();
   if (currentRectangle >= 1) {
@@ -34,43 +29,21 @@ void bubbleSort() {
       swapArrayElements(currentRectangle, currentRectangle - 1);
     }
   }
-
   currentRectangle++;
-
   if (currentRectangle == numRectangles) {
     currentRectangle = 0;
   }
+  // TODO: Create Exit Case Here
 }
 
+void insertionSort() {
+  // TODO: Like Bubble Sort but Optimized (Doesn't Search Sorted Array)
+  // Sorted Array is also at the Front instead of the End
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void selectionSort() {
+  // TODO: This as well
+}
 
 void generateRectangleLengths() {
   int currentPos = 0;
