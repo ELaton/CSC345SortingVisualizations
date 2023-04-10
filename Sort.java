@@ -90,17 +90,31 @@ public class Sort {
     }
 
 
-    public static void mergeSort(ProjectArray a) {
-        mergeRecur(a, 0, a.length() - 1);
-    }
+    //public static void mergeSort(ProjectArray a) {
+    //    mergeRecur(a, 0, a.length() - 1);
+    //}
 
-    private static void mergeRecur(ProjectArray a, int lower, int upper) {
-        if (upper - lower < 1)
+    public static void mergeSort(ProjectArray a) {
+        int len = a.length();
+        if (len < 1)
             return;
-        int mid = (lower + upper) / 2;
-        mergeRecur(a, lower, mid);
-        mergeRecur(a, mid + 1, upper);
-        merge(a, lower, mid, mid + 1, upper);
+
+        for (int size = 1; size < len; size *= 2) {
+            for (int lower = 0; lower < len - 1; lower += 2 * size) {
+                int mid1 = size + lower - 1;
+                int mid2 = mid1 + 1;
+                int upper  = (2 * size) + lower - 1;
+                
+                if (len - 1 < mid1)
+                    mid1 = len - 1;
+                if (len - 1 < mid2)
+                    mid2 = len - 1;
+                if (len - 1 < upper)
+                    upper = len - 1;
+
+                merge(a, lower, mid1, mid2, upper);    
+            }
+        }
     }
 
     private static void merge(ProjectArray a, int lower, int mid1, int mid2, int upper) {

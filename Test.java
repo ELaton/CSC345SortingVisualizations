@@ -23,6 +23,10 @@ public class Test {
                 Sort.heapSort(pa);
             else if (type.equals("radix"))
                 Sort.radixSort(pa);
+            else if (type.equals("quick"))
+                Sort.Quicksort(pa);
+            else if (type.equals("shell"))
+                Sort.Shellsort(pa);
             //System.out.println("Ending sort: ");
             //System.out.println("After:  " + Arrays.toString(array));
             System.out.println("Access Count was: " + pa.getAccessCount());
