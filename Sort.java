@@ -122,7 +122,7 @@ public class Sort {
             a.set(i, a.getExtra(i));
     }
     
-    public void BOGOSort(ProjectArray array) {
+    public static void BOGOSort(ProjectArray array) {
         while (!(array.isSorted())) {
             Random rand = new Random();
             int randOne = rand.nextInt(array.length());
@@ -131,14 +131,14 @@ public class Sort {
         }
     }
 
-    public void Shellsort(ProjectArray array) {
+    public static void Shellsort(ProjectArray array) {
         int h = 1;
         while (h < array.length()/3)
             h = 3*h + 1;
         ShellsortRecur(array, (h-1)/3);
     }
 
-    private void ShellsortRecur(ProjectArray array, int h) {
+    private static void ShellsortRecur(ProjectArray array, int h) {
         System.out.println(h);
         for (int i = 0; i < h; i++) {
             int start = i;
@@ -157,11 +157,11 @@ public class Sort {
         ShellsortRecur(array, (h-1)/3);
     }
 
-    public void Quicksort(ProjectArray array) {
+    public static void Quicksort(ProjectArray array) {
         QuicksortRecur(array, 0, array.length() - 1);
     }
 
-    private void QuicksortRecur(ProjectArray array, int start, int end) {
+    private static void QuicksortRecur(ProjectArray array, int start, int end) {
         if (start >= end || start < 0 || end >= array.length())
             return;
         int pivot = start;
