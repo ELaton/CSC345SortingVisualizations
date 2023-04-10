@@ -195,5 +195,58 @@ public class Sort {
         QuicksortRecur(array, start, pivot - 1);
         QuicksortRecur(array, startShift, end);
     }
+    
+    public static void Timsort(ProjectArray a) {
+        timRecur(a, 0, a.length() - 1);
+    }
 
+    private static void timRecur(ProjectArray a, int lower, int upper) {
+        if (upper - lower < 16) {
+            hybridInsertion(a, lower, upper);
+            return;
+        }
+        int mid = (lower + upper) / 2;
+        timRecur(a, lower, mid);
+        timRecur(a, mid + 1, upper);
+        merge(a, lower, mid, mid + 1, upper);
+    }
+    
+    public static void QuickHybrid(ProjectArray array) {
+        QuickHybridRecur(array, 0, array.length() - 1);
+    }
+
+    private static void QuickHybridRecur(ProjectArray array, int start, int end) {
+        if (end - start < 16) {
+            hybridInsertion(array, start, end);
+            return;
+        }
+        if (start >= end || start < 0 || end >= array.length())
+            return;
+        int pivot = start;
+        int pivotVal = array.get(pivot);
+        int startShift = pivot + 1;
+        for (int i = startShift; i <= end; i++) {
+            if (array.get(i) < pivotVal) {
+                array.swap(startShift, i);
+                array.swap(startShift, pivot);
+                pivot++; startShift++;
+            }
+            else if (array.get(i) == pivotVal) {
+                array.swap(startShift, i);
+                startShift++;
+            }
+        }
+        QuickHybridRecur(array, start, pivot - 1);
+        QuickHybridRecur(array, startShift, end);
+    }
+
+    private static void hybridInsertion(ProjectArray array, int lower, int upper) {
+        for (int i = lower; i < upper; i++) {
+            int compares = i;
+            while (compares >= 0 && array.get(compares) > array.get(compares+1)) {
+                array.swap(compares, compares + 1);
+                compares -= 1;
+            }
+        }
+    }
 }
