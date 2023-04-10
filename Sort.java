@@ -3,13 +3,11 @@ public class Sort {
     public static void heapSort(ProjectArray a) {
         int size = a.length();
 
-        //System.out.println("Starting heapify: ");
         // put into heap order
         for (int i = size / 2 - 1; i >= 0; i--) {
-            //System.out.println("Sinking element i = " + i);
             sink(a, i, size);
         }
-        //System.out.println("Starting sortdown: ");
+        
         // sortdown
         for (int i = size - 1; i > 0; i--) {
             a.swap(i, 0);
@@ -20,7 +18,6 @@ public class Sort {
     private static void sink(ProjectArray a, int parent, int size) {
         int leftChild  = 2 * parent + 1;
         int rightChild = 2 * parent + 2;
-
 
         // loop while parent has children
         while (leftChild < size || rightChild < size) {
@@ -85,7 +82,7 @@ public class Sort {
                 a.setExtra(tmpIndex++, a.get(mid2++));
         }
 
-        for (int i = 0; i < upper; i++)
+        for (int i = bottom; i <= upper; i++)
             a.set(i, a.getExtra(i));
     }
 

@@ -16,7 +16,7 @@ public class Test {
             ProjectArray pa = new ProjectArray(array);
             //System.out.println("Before: " + Arrays.toString(array));
             //System.out.println("Entering sort:");
-            Sort.heapSort(pa);
+            Sort.mergeSort(pa);
             //System.out.println("Ending sort: ");
             //System.out.println("After:  " + Arrays.toString(array));
             System.out.println("Access Count was: " + pa.getAccessCount());
