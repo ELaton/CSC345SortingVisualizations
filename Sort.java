@@ -140,8 +140,7 @@ public class Sort {
         ShellsortRecur(array, (h-1)/3);
     }
 
-    private static void ShellsortRecur(ProjectArray array, int h) {
-        System.out.println(h);
+    private void ShellsortRecur(ProjectArray array, int h) {
         for (int i = 0; i < h; i++) {
             int start = i;
             while (start + h < array.length()) {
@@ -153,7 +152,6 @@ public class Sort {
                 start += h;
             }
         }
-        System.out.println(array.toString());
         if (h == 1)
             return;
         ShellsortRecur(array, (h-1)/3);
