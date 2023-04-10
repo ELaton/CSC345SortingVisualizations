@@ -7,8 +7,8 @@ public class ProjectArray {
     private int accessCount;
 
     public ProjectArray(int[] array) {
-        this.array       = array;
-        this.extra       = new int[array.length];
+        this.array = array;
+        this.extra = new int[array.length];
         this.accessCount = 0;
     }
 
@@ -47,8 +47,19 @@ public class ProjectArray {
         return accessCount;
     }
 
+    public void clearAccessCount() {
+        accessCount = 0;
+    }
+
     public String toString() {
         return Arrays.toString(array);
+    }
+
+    public boolean isSorted() {
+        for (int i = 0; i < array.length; i++)
+            if (array[i] > array[i+1])
+                return false;
+        return true;
     }
 
 }
