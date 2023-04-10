@@ -158,16 +158,16 @@ public class Sort {
     }
 
     public void Quicksort(ProjectArray array) {
-        QuicksortRecur(array, 0, array.length());
+        QuicksortRecur(array, 0, array.length() - 1);
     }
 
     private void QuicksortRecur(ProjectArray array, int start, int end) {
-        if (start >= end || start < 0 || end > array.length())
+        if (start >= end || start < 0 || end >= array.length())
             return;
         int pivot = start;
         int pivotVal = array.get(pivot);
         int startShift = pivot + 1;
-        for (int i = pivot + 1; i < end; i++) {
+        for (int i = startShift; i <= end; i++) {
             if (array.get(i) < pivotVal) {
                 array.swap(startShift, i);
                 array.swap(startShift, pivot);
@@ -178,7 +178,7 @@ public class Sort {
                 startShift++;
             }
         }
-        QuicksortRecur(array, 0, pivot - 1);
+        QuicksortRecur(array, start, pivot - 1);
         QuicksortRecur(array, startShift, end);
     }
 
