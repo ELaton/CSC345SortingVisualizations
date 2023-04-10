@@ -24,7 +24,6 @@ public class ProjectArray {
     public void setExtra(int i, int val) {
         extra[i] = val;
         accessCount++;
-        toString();
     }
 
     public int get(int i) {
@@ -42,7 +41,6 @@ public class ProjectArray {
         array[i] = array[j];
         array[j] = tmp;
         accessCount += 4;
-        toString();
     }
 
     public int getAccessCount() {

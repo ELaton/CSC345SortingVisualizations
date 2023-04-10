@@ -1,4 +1,46 @@
 public class Sort {
+    
+    public static void radixSort(ProjectArray a) {
+        int size = a.length();
+
+        // get the maximum element
+        int max = a.get(0);
+        int tmp = max;
+        for (int i = 1; i < size; i++) {
+            tmp = a.get(i);
+            if (tmp > max)
+                max = tmp;
+        }
+
+        for (int i = 1; max / i > 0; i *= 2) {
+            int ones  = 0;
+            int zeros = 0;
+
+            // count how many elements with radix 0 and 1
+            for (int j = 0; j < size; j++) {
+                if ((a.get(j) / i) % 2 == 0)
+                    zeros++;
+                else 
+                    ones++;
+            }
+
+            // ones is now the first index of an element with radix 1
+            ones += zeros;
+
+            for (int j = size - 1; j >= 0; j--) {
+                tmp = a.get(j);
+                if ((tmp / i) % 2 == 0) {
+                    a.setExtra(--zeros,  tmp);
+                } else {
+                    a.setExtra(--ones, tmp);
+                }
+            }
+
+            for (int j = 0; j < size; j++)
+                a.set(j, a.getExtra(j));
+        }
+    }
+
 
     public static void heapSort(ProjectArray a) {
         int size = a.length();

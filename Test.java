@@ -5,8 +5,9 @@ public class Test {
 
 
     public static void main(String[] args) {
-        int size = Integer.parseInt(args[0]);
-        int iterations = Integer.parseInt(args[1]);
+        String type = args[0];
+        int size = Integer.parseInt(args[1]);
+        int iterations = Integer.parseInt(args[2]);
 
         for (int i = 0; i < iterations; i++) {
             int[] array = new int[size];
@@ -16,7 +17,12 @@ public class Test {
             ProjectArray pa = new ProjectArray(array);
             //System.out.println("Before: " + Arrays.toString(array));
             //System.out.println("Entering sort:");
-            Sort.mergeSort(pa);
+            if (type.equals("merge"))
+                Sort.mergeSort(pa);
+            else if (type.equals("heap"))
+                Sort.heapSort(pa);
+            else if (type.equals("radix"))
+                Sort.radixSort(pa);
             //System.out.println("Ending sort: ");
             //System.out.println("After:  " + Arrays.toString(array));
             System.out.println("Access Count was: " + pa.getAccessCount());
