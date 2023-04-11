@@ -1,5 +1,8 @@
 class RectangleVisualization {
   void drawRectangles() {
+    fill(0, 200, 200);
+    strokeWeight(1);
+    stroke(0, 0, 0);
     int yCoordinate = 750;
     if (recenterNotSkinny) {
       drawRecenteredRectangles(yCoordinate);
