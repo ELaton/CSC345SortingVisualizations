@@ -1,78 +1,88 @@
 int currentRectangle = 0;
 int numRectangles = 50;
-int ticSpeed = 10;
+int ticSpeed = 5;
 int[] rectangleLengths = new int[numRectangles];
 boolean recenterNotSkinny = (numRectangles <= 28);
-int index = 0;
+
+boolean paused = false;
+
+Thread t = new Thread() {
+    public void run() {
+       // bubbleSort(rectangleLengths); 
+       //selectionSort(rectangleLengths); 
+       insertionSort(rectangleLengths); 
+    }
+};
 
 void setup() {
   size(1600, 900);
   frameRate(ticSpeed);
   generateRectangleLengths();
-  drawRectangles();
+  
+  t.start();
 }
 
 void draw() {
-  //insertionSort();
-  //bubbleSort();
-  //selectionSort();
-}
-
-void bubbleSort() {
   drawRectangles();
-  if (currentRectangle >= 1) {
-    if (rectangleLengths[currentRectangle] < rectangleLengths[currentRectangle - 1]) {
-      swapArrayElements(currentRectangle, currentRectangle - 1);
-    }
-  }
-  currentRectangle++;
-  if (currentRectangle == numRectangles && isSorted() == false) {
-    currentRectangle = 0;
-  } else if (currentRectangle == numRectangles && isSorted() == true) {
-    noLoop();
-  }
+  paused = false;
 }
 
-void insertionSort() {
-  currentRectangle = index;
-  while (currentRectangle > 0 && rectangleLengths[currentRectangle - 1] > rectangleLengths[currentRectangle]) {
-    swapArrayElements(currentRectangle - 1, currentRectangle);
-    currentRectangle--;
-  }
-  index++;
-  if (index == numRectangles) {
-    noLoop();
-  }
-}
-
-void selectionSort() {
-  int minIndex = index;
-  for (currentRectangle = index + 1; currentRectangle < numRectangles; currentRectangle++) {
-    if (rectangleLengths[currentRectangle] < rectangleLengths[minIndex]) {
-      minIndex = currentRectangle;
+ // Implements the Algorithm for Bubble Sort
+  void bubbleSort(int inputArray[]) {
+    int numElements = inputArray.length;
+    for (int firstPosition = 0; firstPosition < numElements - 1; firstPosition++) {
+      for (int secondPosition = 0; secondPosition < numElements - firstPosition - 1; secondPosition++) {
+        if (inputArray[secondPosition] > inputArray[secondPosition + 1]) {
+            swapArrayElements(secondPosition, secondPosition + 1);
+        }
+      }
     }
   }
-  swapArrayElements(minIndex, index);
-  index++;
-  if (index == numRectangles) {
-    noLoop();
-  }
-}
 
-boolean isSorted() {
-  for (int index = 0; index < numRectangles - 1; index++) {
-    if (rectangleLengths[index] > rectangleLengths[index + 1]) {
-      return false;
+// Implements the Algorithm for Selection Sort
+  void selectionSort(int inputArray[]) {
+    int numElements = inputArray.length;
+    for (int unsortedPosition = 0; unsortedPosition < numElements - 1; unsortedPosition++) {
+      int minimumPosition = unsortedPosition;
+      for (int comparedPosition = unsortedPosition + 1; comparedPosition < numElements; comparedPosition++) {
+        if (inputArray[comparedPosition] < inputArray[minimumPosition]) {
+          minimumPosition = comparedPosition;
+        }
+      }
+      swapArrayElements(minimumPosition, unsortedPosition); 
     }
   }
-  return true;
-}
+
+  // Implements the Algorithm for Insertion Sort
+  void insertionSort(int inputArray[]) {
+    int numElements = inputArray.length;
+    for (int originalPosition = 1; originalPosition < numElements; originalPosition++) {
+      int originalElement = inputArray[originalPosition];
+      int comparedPosition = originalPosition - 1;
+      while (comparedPosition >= 0 && inputArray[comparedPosition] > originalElement) {
+        inputArray[comparedPosition + 1] = inputArray[comparedPosition];
+        comparedPosition--;
+      }
+      inputArray[comparedPosition + 1] = originalElement;
+      pauseScreen(); 
+    }
+  }
 
 void swapArrayElements(int firstPos, int secondPos) {
   int tempElement = rectangleLengths[secondPos];
   rectangleLengths[secondPos] = rectangleLengths[firstPos];
   rectangleLengths[firstPos] = tempElement;
-  drawRectangles();
+  pauseScreen(); 
+}
+
+void pauseScreen() {
+  paused = true;
+  while (paused) {
+       try {
+         Thread.sleep(1);
+       } catch (Exception e) {
+       }; 
+   }
 }
 
 void generateRectangleLengths() {
@@ -81,8 +91,35 @@ void generateRectangleLengths() {
     int heightModifier = (int) random(1, 50);
     rectangleLengths[currentPos] = heightModifier * 10;
     currentPos++;
+    
+    //// Debugging
+    //rectangleLengths[currentPos] = (numRectangles - index + 2) * 10; 
+    //currentPos++;  
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void drawRectangles() {
   int yCoordinate = 700;
