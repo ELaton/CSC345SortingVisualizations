@@ -4,8 +4,8 @@ import java.util.Random;
 SortingAlgorithms sorts = new SortingAlgorithms();
 RectangleVisualization rectangle = new RectangleVisualization();
 int currentRectangle = 0;
-int numRectangles = 6; //Maximum: 256
-int delay = 1;
+int numRectangles = 64; //Recommended Maximum: 256
+int delay = 5;
 int[] rectangleLengths = new int[numRectangles];
 ProjectArray proj = new ProjectArray(rectangleLengths);
 boolean recenterNotSkinny = (numRectangles <= 28);
@@ -101,8 +101,8 @@ public class SortThread extends Thread {
     case "Lotz":
       sorts.lotzSort(proj);
       break;
-    case "bOgO":
-      sorts.bOgOsOrT(proj);
+    case "BOzoOOoOoOoO":
+      sorts.bOzOsOrT(proj);
       break;
     }
   }
@@ -242,7 +242,7 @@ void drawOptionButtons() {
           break;
         case 8:
           if (mousePressed) {
-            currentSortingMethod = "Bozo"; 
+            currentSortingMethod = "BOzoOOoOoOoO"; 
             sortingNow = true;
             t = new SortThread(currentSortingMethod);
             t.start();
