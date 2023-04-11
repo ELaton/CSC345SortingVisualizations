@@ -82,14 +82,26 @@ class Sorts {
       a.set(i, a.getExtra(i));
   }
 
-  void Shellsort(ProjectArray array) {
+  /**
+   * Shellsort sorts the array using shell sort
+   * the first h value follows the recurrence relation h = 3h + 1, and it is 
+   * the last value such that h < N/3
+   * @param array the array to be sorted
+   */
+  void shellSort(ProjectArray array) {
     int h = 1;
     while (h < array.length()/3)
       h = 3*h + 1;
-    ShellsortRecur(array, (h-1)/3);
+    shellSortRecur(array, (h-1)/3);
   }
 
-  void ShellsortRecur(ProjectArray array, int h) {
+  /**
+   * shellSortRecur recursively calls Shellsort with decreasing h values until
+   * h = 1
+   * @param array the array to be sorted
+   * @param h the size of the "shells" to sort
+   */
+  void shellSortRecur(ProjectArray array, int h) {
     for (int i = 0; i < h; i++) {
       int start = i;
       while (start + h < array.length()) {
@@ -103,14 +115,26 @@ class Sorts {
     }
     if (h == 1)
       return;
-    ShellsortRecur(array, (h-1)/3);
+    shellSortRecur(array, (h-1)/3);
   }
 
-  void Quicksort(ProjectArray array) {
-    QuicksortRecur(array, 0, array.length() - 1);
+  /**
+   * quickSort sorts the array using Quicksort
+   * the pivot values is always the first value in the array
+   * @param array the array to be sorted
+   */
+  void quickSort(ProjectArray array) {
+    quickSortRecur(array, 0, array.length() - 1);
   }
 
-  void QuicksortRecur(ProjectArray array, int start, int end) {
+  /**
+   * quickSortRecur recursively divides the array at its selected pivot, until
+   * the array is sorted
+   * @param array the array to be sorted
+   * @param start the index of the pivot
+   * @param end the last index to compare to the pivot
+   */
+  void quickSortRecur(ProjectArray array, int start, int end) {
     if (start >= end || start < 0 || end >= array.length())
       return;
     int pivot = start;
@@ -127,8 +151,8 @@ class Sorts {
         startShift++;
       }
     }
-    QuicksortRecur(array, start, pivot - 1);
-    QuicksortRecur(array, startShift, end);
+    quickSortRecur(array, start, pivot - 1);
+    quickSortRecur(array, startShift, end);
   }
 
   void heapSort(ProjectArray a) {
@@ -220,6 +244,11 @@ class Sorts {
       pauseScreen();
     }
   }
+  
+  /**
+   * BOGOSort sorts the array using Bozo sort
+   * @param array the array to be sorted
+   */
   void BOGOSort(ProjectArray array) {
     while (!(array.isSorted())) {
       Random rand = new Random();
@@ -229,10 +258,21 @@ class Sorts {
     }
   }
 
-  void Timsort(ProjectArray a) {
-    timRecur(a, 0, a.length() - 1);
+  /**
+   * timSort uses an insertion sort and Merge sort hybrid to sort the array
+   * @param array the array to be sorted
+   */
+  void timSort(ProjectArray array) {
+    timRecur(array, 0, array.length() - 1);
   }
 
+  /**
+   * timRecur recursively divides the array into subarrays, which are sorted
+   * using insertion sort. The subarrays are then merged like in Merge sort
+   * @param a the array to be sorted
+   * @param lower the lower bound of the subarray
+   * @param upper the upper bound of the subarray
+   */
   void timRecur(ProjectArray a, int lower, int upper) {
     if (upper - lower < 7) {
       hybridInsertion(a, lower, upper);
@@ -244,10 +284,24 @@ class Sorts {
     merge(a, lower, mid, mid + 1, upper);
   }
 
+  /**
+   * lotzSort uses an insertion sort and Quicksort hybrid to sort the array. It
+   * is named after our professor, Melanie Lotz, since there was no better name
+   * for it that already existed
+   * @param array the array to be sorted
+   */
   void lotzSort(ProjectArray array) {
     lotzSortRecur(array, 0, array.length() - 1);
   }
 
+  /**
+   * lotzSortRecur recursively divides the array around a pivot similar to
+   * Quicksort. When the subarrays are of a certain length, insertion sort is
+   * used
+   * @param array the array to be sorted
+   * @param start the first index of the subarray
+   * @param end the last index of the subarray
+   */
   void lotzSortRecur(ProjectArray array, int start, int end) {
     if (end - start < 7) {
       hybridInsertion(array, start, end);
@@ -273,6 +327,13 @@ class Sorts {
     lotzSortRecur(array, startShift, end);
   }
 
+  /**
+   * hybridInsertion is a version of insertion sort that can be implemented
+   * as part of a hybrid sorting algorithm such as Timsort
+   * @param array the array to be sorted
+   * @param lower the lower bound of the subarray to be sorted
+   * @param upper the upper bound of the subarray to be sorted
+   */
   void hybridInsertion(ProjectArray array, int lower, int upper) {
     for (int i = lower; i < upper; i++) {
       int compares = i;
