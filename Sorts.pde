@@ -1,8 +1,16 @@
 class Sorts {
+
+  /**
+   * radixSort lexicographically sorts the integer array from least 
+   * significant to most significant bit. For each bit, each element
+   * is placed into the 0s or 1s bucket, until the most significant
+   * bit is reached, at which the elements will be sorted.
+   * @param array the array to be sorted
+   */
   void radixSort(ProjectArray a) {
     int size = a.length();
 
-    // get the maximum element
+    // get the maximum element so we know how many bits to iterate through
     int max = a.get(0);
     int tmp = max;
     for (int i = 1; i < size; i++) {
@@ -16,13 +24,13 @@ class Sorts {
       int ones  = size;
       int zeros = 0;
 
-      // count how many elements with radix 0
+      // count how many elements with current bit 0
       for (int j = 0; j < size; j++) {
         if ((a.get(j) / i) % 2 == 0)
           zeros++;
       }
 
-      // copy elements of radix 0 and 1 separately into tmp array in order
+      // copy elements with current bit 0 and 1 separately into tmp array preserving order
       for (int j = size - 1; j >= 0; j--) {
         tmp = a.get(j);
         if ((tmp / i) % 2 == 0)
@@ -37,28 +45,29 @@ class Sorts {
     }
   }
 
+  /**
+   * mergeSort divides the array into smaller and smaller subarrays, then
+   * combines sorted subarrays together to obtain the sorted original array.
+   * @param array the array to be sorted
+   */
+  void mergeSort(ProjectArray array) {
+    mergeSortRecur(array, 0, array.length() - 1);
+  }
 
-  void mergeSort(ProjectArray a) {
-    int len = a.length();
-    if (len < 1)
+  /**
+   * mergeSortRecur recursively divides the array into subarrays until the
+   * the subarrays are of size 1. The subarrays are then merged together.
+   * @param a the array to be sorted
+   * @param lower the lower bound of the subarray
+   * @param upper the upper bound of the subarray
+   */
+  void mergeSortRecur(ProjectArray a, int lower, int upper) {
+    if (upper - lower < 1)
       return;
-
-    for (int size = 1; size < len; size *= 2) {
-      for (int lower = 0; lower < len - 1; lower += 2 * size) {
-        int mid1 = size + lower - 1;
-        int mid2 = mid1 + 1;
-        int upper  = (2 * size) + lower - 1;
-
-        if (len - 1 < mid1)
-          mid1 = len - 1;
-        if (len - 1 < mid2)
-          mid2 = len - 1;
-        if (len - 1 < upper)
-          upper = len - 1;
-
-        merge(a, lower, mid1, mid2, upper);
-      }
-    }
+    int mid = (lower + upper) / 2;
+    mergeSortRecur(a, lower, mid);
+    mergeSortRecur(a, mid + 1, upper);
+    merge(a, lower, mid, mid + 1, upper);
   }
 
   void merge(ProjectArray a, int lower, int mid1, int mid2, int upper) {
@@ -247,6 +256,7 @@ class Sorts {
   
   /**
    * BOGOSort sorts the array using Bozo sort
+   * Random elements are swapped until the array is sorted
    * @param array the array to be sorted
    */
   void BOGOSort(ProjectArray array) {
