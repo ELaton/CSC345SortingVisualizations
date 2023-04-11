@@ -1,3 +1,7 @@
+/**
+ * The class Sorts contains all the sorting algorithms used in the project
+ * as well as any helper methods that they require.
+ */
 class Sorts {
 
   /**
@@ -236,8 +240,11 @@ class Sorts {
     }
   }
 
-
-  // Implements the Algorithm for Bubble Sort
+  /**
+   * bubbleSort sorts the array by repeatedly swapping 
+   * adjacent elements if the larger element comes first.
+   * @param inputArray the array to be sorted
+   */
   void bubbleSort(ProjectArray inputArray) {
     int numElements = inputArray.length();
     for (int firstPosition = 0; firstPosition < numElements - 1; firstPosition++) {
@@ -248,8 +255,13 @@ class Sorts {
       }
     }
   }
-
-  // Implements the Algorithm for Selection Sort
+  
+  /**
+   * selectionSort sorts the array by repeatedly selecting
+   * the minimum element in the remaining unsorted part of
+   * the array and putting it in the next unsorted spot
+   * @param inputArray the array to be sorted
+   */
   void selectionSort(ProjectArray inputArray) {
     int numElements = inputArray.length();
     for (int unsortedPosition = 0; unsortedPosition < numElements - 1; unsortedPosition++) {
@@ -263,7 +275,12 @@ class Sorts {
     }
   }
 
-  // Implements the Algorithm for Insertion Sort
+  /**
+   * insertionSort sorts the array by inserting the current
+   * element into its correct place in the already sorted
+   * part of the array.
+   * @param inputArray the array to be sorted
+   */
   void insertionSort(ProjectArray inputArray) {
     int numElements = inputArray.length();
     for (int originalPosition = 1; originalPosition < numElements; originalPosition++) {
