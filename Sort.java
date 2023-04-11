@@ -122,7 +122,7 @@ public class Sort {
         int tmpIndex = lower;
        
         // loop while lower or upper array still has elements
-        while ((lower <= mid1 || mid2 <= upper) && tmpIndex < a.length()){
+        while ((lower <= mid1 || mid2 <= upper) && tmpIndex <= upper){
             if (lower > mid1) // lower array is fully copied, so copy rest of upper array
                 a.setExtra(tmpIndex++, a.get(mid2++));
             else if (mid2 > upper) // upper array is fully copied, so copy rest of lower array
