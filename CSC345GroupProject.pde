@@ -4,16 +4,15 @@ import java.util.Random;
 SortingAlgorithms sorts = new SortingAlgorithms();
 RectangleVisualization rectangle = new RectangleVisualization();
 int currentRectangle = 0;
-int numRectangles = 256;
+int numRectangles = 6; //Maximum: 256
 int delay = 1;
 int[] rectangleLengths = new int[numRectangles];
 ProjectArray proj = new ProjectArray(rectangleLengths);
 boolean recenterNotSkinny = (numRectangles <= 28);
 boolean paused = false;
-
 boolean sortingNow = false;
-
-
+String currentSortingMethod; 
+Thread t;
 
 public class ProjectArray {
   private int[] array;
@@ -66,79 +65,69 @@ public class ProjectArray {
 }
 
 public class SortThread extends Thread {
-  char sort;
-
-  public SortThread(char sort) {
+  String sort;
+  public SortThread(String sort) {
     this.sort = sort;
   }
-
   public void run() {
     switch(sort) {
-    case '0':
+    case "Bubble":
       sorts.bubbleSort(proj);
       break;
-    case '1':
+    case "Selection":
       sorts.selectionSort(proj);
       break;
-    case '2':
+    case "Insertion":
       sorts.insertionSort(proj);
       break;
-    case '3':
+    case "Shell":
       sorts.shellSort(proj);
       break;
-    case '4':
+    case "Heap":
       sorts.heapSort(proj);
       break;
-    case '5':
+    case "Radix":
       sorts.radixSort(proj);
       break;
-    case '6':
+    case "Merge":
       sorts.mergeSort(proj);
       break;
-    case '7':
+    case "Quick":
       sorts.quickSort(proj);
       break;
-    case '8':
+    case "Tim":
       sorts.timSort(proj);
       break;
-    case '9':
+    case "Lotz":
       sorts.lotzSort(proj);
       break;
-    case '?':
+    case "bOgO":
       sorts.bOgOsOrT(proj);
       break;
     }
   }
 }
 
-Thread t;
-/*  public void run() {
- 
- //sorts.bubbleSort(proj);
- //sorts.selectionSort(proj);
- //sorts.insertionSort(proj);
- //sorts.radixSort(proj);
- //sorts.heapSort(proj);
- //sorts.mergeSort(proj);
- //sorts.Shellsort(proj);
- //sorts.Quicksort(proj);
- //sorts.BOGOSort(proj);
- //sorts.lotzSort(proj);
- //sorts.Timsort(proj);
- }
- };*/
-
 void setup() {
   size(1600, 900);
+  openSelectionScreen();
+  generateRectangleLengths();
 }
 
 void draw() {
-  fill(200, 200, 200);
-  rectangle.drawRectangles();
-
-  drawOptionButtons();
-
-  paused = false;
+  if (sortingNow == true) {
+    rectangle.drawRectangles();
+    fill(0, 0, 0);
+    textSize(64); 
+    text("Current Sorting Method: " + currentSortingMethod, 50, 100); 
+    textSize(50); 
+    text("Access Count: ", 100, 175);
+    fill(232, 47, 47); 
+    text(str(proj.getAccessCount()), 400, 175);
+    paused = false;
+  } else {
+    openSelectionScreen();
+  }
 }
 
 void pauseScreen() {
@@ -169,153 +158,169 @@ void generateRectangleLengths() {
   }
 }
 
-void keyPressed() {
-
-
-
-  if (key == '0' || key == '1' || key == '2' || key == '3' || key == '4' ||
-    key == '5' || key == '6' || key == '7' || key == '8' || key == '9' ||
-    key == '?') {
-    sortingNow = true;
-    generateRectangleLengths();
-    t = new SortThread(key);
-  }
-  t.start();
+void openSelectionScreen() {
+  fill(255, 255, 255);
+  rect(0, 0, 1600, 900);
+  drawOptionButtons();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void drawOptionButtons() {
-  textSize(64);
-  if (sortingNow == false) {
-    fill(0, 0, 0);
-    text("Press the Letter of the Sorting Algorithm You Want", 120, 80);
-    textSize(32);
-    for (int xCoord = 150; xCoord <= 1050; xCoord += 450) {
-      for (int yCoord = 130; yCoord <= 530; yCoord += 200) {
-        fill(200, 200, 200);
-        rect(xCoord, yCoord, 300, 150, 10);
+  textSize(50);
+  fill(0, 0, 0);
+  text("Click the Sorting Algorithm You Want", 420, 70);
+  textSize(32);
+  int currentButton = 0;
+  for (int xCoord = 150; xCoord <= 1050; xCoord += 450) {
+    for (int yCoord = 130; yCoord <= 530; yCoord += 200) {
+      if (mouseX >= xCoord && mouseX <= xCoord + 300 && mouseY >= yCoord && mouseY <= yCoord + 150) {
+        strokeWeight(5);
+        stroke(0, 200, 200);
+        switch (currentButton) {
+        case 0:
+          if (mousePressed) {
+            currentSortingMethod = "Bubble"; 
+            sortingNow = true;
+            t = new SortThread("Bubble");
+            t.start();
+          }
+          break;
+        case 1:
+          if (mousePressed) {
+            currentSortingMethod = "Shell"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        case 2:
+          if (mousePressed) {
+            currentSortingMethod = "Merge"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        case 3:
+          if (mousePressed) {
+            currentSortingMethod = "Selection"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        case 4:
+          if (mousePressed) {
+            currentSortingMethod = "Heap"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        case 5:
+          if (mousePressed) {
+            currentSortingMethod = "Quick"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        case 6:
+          if (mousePressed) {
+            currentSortingMethod = "Insertion"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        case 7:
+          if (mousePressed) {
+            currentSortingMethod = "Radix"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        case 8:
+          if (mousePressed) {
+            currentSortingMethod = "Bozo"; 
+            sortingNow = true;
+            t = new SortThread(currentSortingMethod);
+            t.start();
+          }
+          break;
+        }
+      } else {
+        noStroke();
       }
-    }
-    fill(200, 200, 200);
-    rect(375, 720, 300, 150, 10);
-    fill(0, 0, 0);
-    text("Timsort", 470, 715);
-    fill(200, 200, 200);
-    rect(825, 720, 300, 150, 10);
-    fill(0, 0, 0);
-    text("Lotzsort", 915, 715);
-    int currentButton = 0;
-    while (currentButton < 11) {
-      switch (currentButton) {
-      case 0:
-        text("Bubble", 250, 125);
-        textSize(64);
-        text("0", 280, 225);
-        textSize(32);
-        break;
-      case 1:
-        text("Selection", 690, 125);
-        textSize(64);
-        text("1", 735, 225);
-        textSize(32);
-        break;
-      case 2:
-        text("Insertion", 1140, 125);
-        textSize(64);
-        text("2", 1195, 225);
-        textSize(32);
-        break;
-      case 3:
-        text("Shell", 270, 325);
-        textSize(64);
-        text("3", 280, 425);
-        textSize(32);
-        break;
-      case 4:
-        text("Heap", 715, 325);
-        textSize(64);
-        text("4", 735, 425);
-        textSize(32);
-        break;
-      case 5:
-        text("Radix", 1160, 325);
-        textSize(64);
-        text("5", 1190, 425);
-        textSize(32);
-        break;
-      case 6:
-        text("Merge", 250, 525);
-        textSize(64);
-        text("6", 280, 625);
-        textSize(32);
-        break;
-      case 7:
-        text("Quick", 710, 525);
-        textSize(64);
-        text("7", 735, 625);
-        textSize(32);
-        break;
-      case 8:
-        text("Bozo", 1165, 525);
-        textSize(64);
-        text("?", 1190, 625);
-        textSize(32);
-        break;
-      case 9:
-        textSize(64);
-        text("8", 507, 815);
-        textSize(32);
-        break;
-      case 10:
-        textSize(64);
-        text("9", 962, 815);
-        textSize(32);
-        break;
-      }
+      fill(200, 200, 200);
+      rect(xCoord, yCoord, 300, 150, 10);
       currentButton++;
     }
-    noStroke();
+  }
+  if (mouseX >= 375 && mouseX <= 675 && mouseY >= 720 && mouseY <= 870) {
+    strokeWeight(5);
+    stroke(0, 200, 200);
+    if (mousePressed) {
+      sortingNow = true;
+      currentSortingMethod = "Tim"; 
+      t = new SortThread(currentSortingMethod);
+      t.start();
+    }
   } else {
-    stroke(0, 0, 0);
-    fill(0, 0, 0);
-    text("Access Count: ", 600, 150);
-    fill(0, 200, 200);
-    text(str(proj.getAccessCount()), 1000, 150);
-    rectangle.drawRectangles();
+    noStroke();
+  }
+  fill(200, 200, 200);
+  rect(375, 720, 300, 150, 10);
+  fill(0, 0, 0);
+  text("Timsort", 470, 810);
+  if (mouseX >= 825 && mouseX <= 1125 && mouseY >= 720 && mouseY <= 870) {
+    strokeWeight(5);
+    stroke(0, 200, 200);
+    if (mousePressed) {
+      sortingNow = true;
+      currentSortingMethod = "Lotz"; 
+      t = new SortThread(currentSortingMethod);
+      t.start();
+    }
+  } else {
+    noStroke();
+  }
+  fill(200, 200, 200);
+  rect(825, 720, 300, 150, 10);
+  fill(0, 0, 0);
+  text("Lotzsort", 915, 810);
+  noStroke();
+  currentButton = 0;
+  while (currentButton < 11) {
+    switch (currentButton) {
+    case 0:
+      text("Bubble", 250, 215);
+      break;
+    case 1:
+      text("Selection", 690, 215);
+      break;
+    case 2:
+      text("Insertion", 1140, 215);
+      break;
+    case 3:
+      text("Shell", 270, 415);
+      break;
+    case 4:
+      text("Heap", 715, 415);
+      break;
+    case 5:
+      text("Radix", 1160, 415);
+      break;
+    case 6:
+      text("Merge", 250, 615);
+      break;
+    case 7:
+      text("Quick", 710, 615);
+      break;
+    case 8:
+      text("Bozo", 1165, 615);
+      break;
+    }
+    currentButton++;
   }
 }
