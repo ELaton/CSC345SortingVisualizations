@@ -5,7 +5,7 @@ class Sorts {
    * significant to most significant bit. For each bit, each element
    * is placed into the 0s or 1s bucket, until the most significant
    * bit is reached, at which the elements will be sorted.
-   * @param array the array to be sorted
+   * @param a the array to be sorted
    */
   void radixSort(ProjectArray a) {
     int size = a.length();
@@ -57,6 +57,7 @@ class Sorts {
   /**
    * mergeSortRecur recursively divides the array into subarrays until the
    * the subarrays are of size 1. The subarrays are then merged together.
+   * All bounds are inclusive.
    * @param a the array to be sorted
    * @param lower the lower bound of the subarray
    * @param upper the upper bound of the subarray
@@ -70,6 +71,15 @@ class Sorts {
     merge(a, lower, mid, mid + 1, upper);
   }
 
+  /**
+   * merge combines sorted subarrays into a single sorted subarray.
+   * All bounds are inclusive.
+   * @param a the array to be sorted
+   * @param lower the lower bound of the first subarray
+   * @param mid1 the upper bound of the first subarray
+   * @param mid2 the lower bound of the second subarray
+   * @param upper the upper bound of the second subarray
+   */
   void merge(ProjectArray a, int lower, int mid1, int mid2, int upper) {
     int bottom   = lower;
     int tmpIndex = lower;
@@ -163,7 +173,13 @@ class Sorts {
     quickSortRecur(array, start, pivot - 1);
     quickSortRecur(array, startShift, end);
   }
-
+  
+  /**
+   * heapSort puts the array max into heap order, then sorts the array
+   * by repeatedly swapping the max element with the last,
+   * then sinking the new first element.
+   * @param a the array to be sorted
+   */
   void heapSort(ProjectArray a) {
     int size = a.length();
 
@@ -177,7 +193,15 @@ class Sorts {
       sink(a, 0, i);
     }
   }
-
+  
+  /**
+   * sink moves the element at index parent to its appropriate
+   * place in the max heap by repeatedly swapping it with its
+   * children until it has no greater children
+   * @param a the array to be sorted
+   * @param parent the index of the element to sink
+   * @param size the length of the array a to sort
+   */
   void sink(ProjectArray a, int parent, int size) {
     int leftChild  = 2 * parent + 1;
     int rightChild = 2 * parent + 2;
